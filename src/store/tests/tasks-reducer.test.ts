@@ -1,6 +1,14 @@
 import {v1} from "uuid";
-import {PropsStyleForTask} from "../types/PropsStyle";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, taskReducer} from "./tasks-reducer";
+
+import {
+    addTaskAC,
+    changeTaskStatusAC,
+    changeTaskTitleAC,
+    PropsStyleForTask,
+    removeTaskAC,
+    taskReducer
+} from "../tasks-reducer";
+
 
 let startState: { [key: string]: PropsStyleForTask[] }
 let todolistId1: string

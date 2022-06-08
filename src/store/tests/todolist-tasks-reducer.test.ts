@@ -1,14 +1,15 @@
-import {TaskObjType, TidolistType} from "../types/PropsStyle";
-import {addTodolistAC, removeTodolistAC, todolistReducer} from "./todolist-reducer";
-import {taskReducer} from "./tasks-reducer";
+import {addTodolist, removeTodolist, todolistReducer} from "../todolist-reducer";
+import {PropsStyleForTask, taskReducer} from "../tasks-reducer";
 import {v1} from "uuid";
+import {TodolistType} from "../../components/Todolist/Wrapper";
 
+type TaskObjType = { [key: string]: PropsStyleForTask[] }
 
 test('ids shold be equals', () => {
     const startTasksState: TaskObjType = {};
-    const startTodolistState: Array<TidolistType> = [];
+    const startTodolistState: Array<TodolistType> = [];
 
-    const action = addTodolistAC('123', 'new todolist');
+    const action = addTodolist('123', 'new todolist');
 
     const andTasksState = taskReducer(startTasksState, action)
     const endTodolistState = todolistReducer(startTodolistState, action)
@@ -39,7 +40,7 @@ test('ids shold be remove ', () => {
 
     };
 
-    const action = removeTodolistAC('todolistId2');
+    const action = removeTodolist('todolistId2');
 
     const andTasksState = taskReducer(startTasksState, action)
 

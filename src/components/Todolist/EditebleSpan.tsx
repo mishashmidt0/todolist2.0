@@ -1,7 +1,12 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {EditebleSpanPropsType} from "../../types/PropsStyle";
+
 import {TextField} from "@material-ui/core";
 
+export type EditebleSpanPropsType = {
+    title: string
+    id: string
+    dispatch: any
+}
 
 export const EditebleSpan = React.memo(({id, title, dispatch}: EditebleSpanPropsType) => {
         console.log('EditebleSpan')

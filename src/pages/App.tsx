@@ -3,20 +3,20 @@ import './App.css';
 import {AddItemForm} from "../components/Todolist/AddItemForm";
 import {Container} from '@material-ui/core';
 import {v1} from "uuid";
-import {addTodolistAC} from "../store/todolist-reducer";
+import {addTodolist} from "../store/todolist-reducer";
 import {Header} from "../components/Todolist/Header";
 import {Wrapper} from "../components/Todolist/Wrapper";
 import {useDispatch} from "react-redux";
 
 
 const App = React.memo(() => {
+
     const dispatch = useDispatch()
     console.log('App')
 
     const dispatchAddTodolist = useCallback((title: string) => {
-        dispatch(addTodolistAC(v1(), title))
+        dispatch(addTodolist(v1(), title))
     }, [dispatch])
-
 
     return (
         <div>

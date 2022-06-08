@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
-import {tasksStateType} from "../../store/tasks-reducer";
-import {PropsStyleForTask} from "../../types/PropsStyle";
+import {PropsStyleForTask, tasksStateType} from "../../store/tasks-reducer";
+
 import {isActiveType} from "./Todolist";
 import {Task} from "./Task";
 
@@ -10,6 +10,7 @@ type TaskPropsType = {
     tasks: tasksStateType
     filter: isActiveType
 }
+
 
 export const Tasks = React.memo(({todolistId, tasks, filter}: TaskPropsType) => {
 

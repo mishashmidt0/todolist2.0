@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {Grid, IconButton, TextField} from "@material-ui/core";
 import {ControlPoint} from "@material-ui/icons";
-import {AddItemFormPropsType} from "../../types/PropsStyle";
 
 
-export const AddItemForm = React.memo(({ dispatch}: AddItemFormPropsType) => {
+
+export const AddItemForm = React.memo(({ dispatch}: any) => {
 
     console.log('AddItemForm')
 

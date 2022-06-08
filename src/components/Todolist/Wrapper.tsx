@@ -3,17 +3,22 @@ import {Grid, Paper} from "@material-ui/core";
 import {Todolist} from "./Todolist";
 import {useSelector} from "react-redux";
 import {storeType} from "../../store/redux";
-import {TidolistType} from "../../types/PropsStyle";
+
+export type TodolistType = {
+    id: string,
+    title: string,
+    filter: 'all' | 'active' | 'completed';
+}
 
 export const Wrapper = React.memo(() => {
-    const todolists = useSelector<storeType, Array<TidolistType>>((store) => store.todolistReducer)
+    const todolists = useSelector<storeType, Array<TodolistType>>((store) => store.todolistReducer)
     console.log('Wrapper')
 
     return <Todolists todolists={todolists}/>
 });
 
 type todolistsPropsType = {
-    todolists: Array<TidolistType>
+    todolists: Array<TodolistType>
 }
 
 
@@ -21,9 +26,7 @@ const Todolists = React.memo(({todolists}: todolistsPropsType) => {
     console.log('Todolists')
 
     const renderTodolists = useCallback(() => {
-        debugger
         return todolists.map((todolist) => {
-
             return (
                 <Grid item key={todolist.id}>
                     <Paper style={{padding: '10px'}}>
@@ -35,7 +38,7 @@ const Todolists = React.memo(({todolists}: todolistsPropsType) => {
 
     return (
         <Grid container spacing={5}>
-            {renderTodolists()}
+            {todolists && renderTodolists()}
         </Grid>
     )
 })

@@ -1,12 +1,11 @@
 import React, {useCallback} from "react";
 import {Checkbox} from "@material-ui/core";
-import {changeTaskStatusAC, removeTaskAC} from "../../store/tasks-reducer";
+import {changeTaskStatusAC, PropsStyleForTask, removeTaskAC} from "../../store/tasks-reducer";
 import s from "./styleTodoList.module.css";
 import {EditebleSpan} from "./EditebleSpan";
-import {changeTodolistTitleAC} from "../../store/todolist-reducer";
+import {changeTodolistTitle} from "../../store/todolist-reducer";
 import Button from "@material-ui/core/Button";
 import {HighlightOff} from "@material-ui/icons";
-import {PropsStyleForTask} from "../../types/PropsStyle";
 import {useDispatch} from "react-redux";
 import style from './styleTodoList.module.css';
 
@@ -22,7 +21,7 @@ export const Task = React.memo(({todolistId, task}: taskPropsType) => {
         dispatch(removeTaskAC(id, todolistId))
     }, [dispatch])
     const dispatchChangeTodolistTitle = useCallback((todolistId: string, title: string) => {
-        dispatch(changeTodolistTitleAC(todolistId, title))
+        dispatch(changeTodolistTitle(todolistId, title))
     }, [dispatch])
     const dispatchChangeTaskStatus = useCallback((todolistId: string, taskId: string, status: boolean) => {
         dispatch(changeTaskStatusAC(todolistId, taskId, status))

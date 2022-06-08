@@ -1,4 +1,4 @@
-import {userReducer} from "./user-reducer";
+import {userReducer} from "../user-reducer";
 
 
 test('useer reducer should increment only age', () => {
