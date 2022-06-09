@@ -26,8 +26,6 @@ export const Todo = React.memo(({todolistId, title}: todolistTypeProps) => {
     }, [])
 
 
-    console.log('Todolist11')
-
     const todolistTasks = useSelector<storeType, tasksStateType>(store => store.taskReducer)
 
     const [isActive, setActive] = useState<isActiveType>('all')
