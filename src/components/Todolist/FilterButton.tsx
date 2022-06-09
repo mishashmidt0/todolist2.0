@@ -1,7 +1,7 @@
 import React from "react";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
-import {isActiveType} from "./Todolist";
+import {isActiveType} from "./Todo";
 
 type FilterButtonPropsType = {
     filter: isActiveType

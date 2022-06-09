@@ -1,10 +1,10 @@
-import React, {useCallback, useState} from "react";
+import React, {Dispatch, useCallback, useEffect, useState} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditebleSpan} from "./EditebleSpan";
 import Button from "@material-ui/core/Button";
 import {DeleteOutline} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
-import {addTaskAC, tasksStateType,} from "../../store/tasks-reducer";
+import {addTaskAC, setTaskCT, tasksStateType,} from "../../store/tasks-reducer";
 import {changeTodolistTitle, removeTodolist} from "../../store/todolist-reducer";
 import {Tasks} from "./Tasks";
 import {FilterButton} from "./FilterButton";
@@ -18,21 +18,28 @@ type todolistTypeProps = {
 }
 
 
-export const Todolist = React.memo(({todolistId, title}: todolistTypeProps) => {
+export const Todo = React.memo(({todolistId, title}: todolistTypeProps) => {
+    const dispatch = useDispatch<any>()
+
+    useEffect(() => {
+        dispatch(setTaskCT(todolistId))
+    }, [])
+
 
     console.log('Todolist11')
 
-    const dispatch = useDispatch()
     const todolistTasks = useSelector<storeType, tasksStateType>(store => store.taskReducer)
 
     const [isActive, setActive] = useState<isActiveType>('all')
 
-    const dispatchChangeTodolistTitle = useCallback((id:string, title:string) => {
+    const dispatchChangeTodolistTitle = useCallback((id: string, title: string) => {
         dispatch(changeTodolistTitle(id, title))
     }, [dispatch])
-    const dispatchAddTask = useCallback((titleTask:string) => {
+
+    const dispatchAddTask = useCallback((titleTask: string) => {
         dispatch(addTaskAC(todolistId, titleTask))
     }, [dispatch, todolistId])
+
     const dispatchRemoveTodolist = useCallback(() => {
         dispatch(removeTodolist(todolistId))
     }, [dispatch, todolistId])

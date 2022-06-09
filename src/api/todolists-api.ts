@@ -10,13 +10,8 @@ class TodoAPI {
         }
     })
 
-    getTodo(setArrTodo: (item: Object[]) => void) {
-        this.instance.get("todo-lists")
-            .then(res => {
-                setArrTodo(res.data)
-            })
-            .catch(err => setArrTodo(err))
-
+    getTodo() {
+        return this.instance.get("todo-lists")
     }
 
     postTodo(title: string, setTodo: (item: any) => void) {

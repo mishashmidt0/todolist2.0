@@ -1,8 +1,11 @@
 import {v1} from "uuid";
-import {AddTodolist, RemoveTodolist} from "./todolist-reducer";
+import {AddTodolist, RemoveTodolist, setAllTodo} from "./todolist-reducer";
+import {Dispatch} from "react";
+import taskAPI, {TaskType} from "../api/tasks-api";
 
 const initialState: tasksStateType = {}
 export const taskReducer = (task: tasksStateType = initialState, action: taskReducerAT): tasksStateType => {
+
     switch (action.type) {
         case "REMOVE-TASK":
             return {...task, [action?.idTodolist]: task[action.idTodolist].filter((e) => e.id !== action.id)}
@@ -11,8 +14,16 @@ export const taskReducer = (task: tasksStateType = initialState, action: taskRed
                 ...task,
                 [action.idTodolist]: [{
                     id: v1(),
-                    title: action.title as string,
-                    isDone: false
+                    description: '',
+                    title: action.title,
+                    completed: false,
+                    status: 0,
+                    priority: 0,
+                    startDate: '',
+                    deadline: "",
+                    todoListId: action.idTodolist,
+                    addedDate: '',
+                    order: 0,
                 }, ...task[action.idTodolist]]
             }
         case 'CHANGE-TASK-TITLE':
@@ -38,12 +49,16 @@ export const taskReducer = (task: tasksStateType = initialState, action: taskRed
                 ...task,
                 [action.id]: []
             }
-        case "REMOVE-TODOLIST":
+        case "REMOVE-TODOLIST": {
             const stateCope = {...task}
             delete stateCope[action.id]
             return {
                 ...stateCope
             }
+        }
+
+        case 'SET-TASKS':
+            return {...task, [action.idTodolist]: [...action.tasks]}
         default:
             return task
     }
@@ -63,14 +78,22 @@ export const changeTaskStatusAC = (idTodolist: string, id: string, isDone: boole
     id,
     isDone
 } as const)
+export const setTasks = (idTodolist: string, tasks: TaskType[]) => ({type: 'SET-TASKS', idTodolist, tasks} as const)
+
+
+// thunk
+export const setTaskCT = (todolistId: string) => {
+    return (dispatch: Dispatch<taskReducerAT>) => {
+        taskAPI.getTasks(todolistId)
+            .then(res => {
+                dispatch(setTasks(todolistId, res.data.items))
+            })
+    }
+}
 
 // type
-export type PropsStyleForTask = {
-    id: string,
-    title: string,
-    isDone: boolean
-}
-export type tasksStateType = { [key: string]: PropsStyleForTask[] };
+
+export type tasksStateType = { [key: string]: TaskType[] };
 export type filterTypeTask = {
     type: 'FILTER-TASK'
     filter: 'all' | 'active' | 'completed'
@@ -81,6 +104,9 @@ export type taskReducerAT =
     | ReturnType<typeof addTaskAC>
     | ReturnType<typeof changeTaskTitleAC>
     | ReturnType<typeof changeTaskStatusAC>
+    | ReturnType<typeof setTasks>
     | AddTodolist
     | RemoveTodolist
-    | filterTypeTask;
+    | filterTypeTask
+
+

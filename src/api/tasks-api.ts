@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-type TaskType = {
+export type TaskType = {
     description: string,
     title: string,
     completed: boolean,
@@ -14,7 +14,7 @@ type TaskType = {
     order: number,
     addedDate: string,
 }
-type GetTaskResponse = {
+export type GetTaskResponse = {
     error: string | null,
     totalCount: number,
     items: TaskType[]

@@ -1,17 +1,17 @@
 // import {action} from "@storybook/addon-actions";
 import React from "react";
-import {Todolist} from "../components/Todolist/Todolist";
+import {Todo} from "../components/Todolist/Todo";
 import ReduxStoreProviderDecorator from "./ReduxStoreProviderDecorator";
 
 
 export default {
-    title: "Todolist Component",
-    component: Todolist,
+    title: "Todo Component",
+    component: Todo,
     decorators: [ReduxStoreProviderDecorator]
 }
 
-// const changeTodolist = action("Todolist changed")
+// const changeTodolist = action("Todo changed")
 
 export const TodolistBaseExample = () => {
-    return <Todolist todolistId={"todolist1"} title={"Test Todolist"}/>
+    return <Todo todolistId={"todolist1"} title={"Test Todo"}/>
 }

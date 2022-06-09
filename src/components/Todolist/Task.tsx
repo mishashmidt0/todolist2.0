@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 import {Checkbox} from "@material-ui/core";
-import {changeTaskStatusAC, PropsStyleForTask, removeTaskAC} from "../../store/tasks-reducer";
+import {changeTaskStatusAC, removeTaskAC} from "../../store/tasks-reducer";
 import s from "./styleTodoList.module.css";
 import {EditebleSpan} from "./EditebleSpan";
 import {changeTodolistTitle} from "../../store/todolist-reducer";
@@ -8,12 +8,19 @@ import Button from "@material-ui/core/Button";
 import {HighlightOff} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
 import style from './styleTodoList.module.css';
+import {TaskType} from "../../api/tasks-api";
 
 
 type taskPropsType = {
     todolistId: string
-    task: PropsStyleForTask
+    task: TaskType
 }
+
+enum TaskStatus {
+    "new",
+    "Completed",
+}
+
 export const Task = React.memo(({todolistId, task}: taskPropsType) => {
     const dispatch = useDispatch()
 
@@ -31,10 +38,10 @@ export const Task = React.memo(({todolistId, task}: taskPropsType) => {
     return (
         <li key={task.id} className={style.li}>
             <Checkbox
-                checked={task.isDone}
+                checked={TaskStatus[task.status] !== "new"}
                 readOnly={true}
                 onChange={(e) => dispatchChangeTaskStatus(todolistId, task.id, e.currentTarget.checked)}
-                className={task.isDone ? s.completeTask : ''}
+                className={task.status ? s.completeTask : ''}
             />
             <EditebleSpan id={task.id} title={task.title} dispatch={dispatchChangeTodolistTitle}/>
 

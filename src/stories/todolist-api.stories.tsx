@@ -12,7 +12,7 @@ export const getTodolist = () => {
     const [arrTodo, setArrTodo] = useState<any>(null)
 
     useEffect(() => {
-        todoAPI.getTodo(setArrTodo)
+        // todoAPI.getTodo(setArrTodo)
     }, [])
 
     return <div> {arrTodo && arrTodo.map((el: any, index: number) => {
