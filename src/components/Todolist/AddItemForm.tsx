@@ -1,15 +1,15 @@
-import React, {useState} from "react";
+import React, { useState} from "react";
 import {Grid, IconButton, TextField} from "@material-ui/core";
 import {ControlPoint} from "@material-ui/icons";
 
 
 
-export const AddItemForm = React.memo(({ dispatch}: any) => {
 
-    console.log('AddItemForm')
+export const AddItemForm = React.memo(({ dispatch}: any) => {
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState('');
+
 
     const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
         setError('');

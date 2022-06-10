@@ -1,9 +1,8 @@
 import React, {useCallback} from "react";
 import {Checkbox} from "@material-ui/core";
-import {changeTaskStatusAC, removeTaskAC} from "../../store/tasks-reducer";
+import {deleteTaskTC, TaskDomainType, updateTaskTC} from "../../store/tasks-reducer";
 import s from "./styleTodoList.module.css";
 import {EditebleSpan} from "./EditebleSpan";
-import {changeTodolistTitle} from "../../store/todolist-reducer";
 import Button from "@material-ui/core/Button";
 import {HighlightOff} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
@@ -22,30 +21,27 @@ enum TaskStatus {
 }
 
 export const Task = React.memo(({todolistId, task}: taskPropsType) => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch<any>()
 
-    const dispatchRemoveTask = useCallback((id: string, todolistId: string) => {
-        dispatch(removeTaskAC(id, todolistId))
-    }, [dispatch])
-    const dispatchChangeTodolistTitle = useCallback((todolistId: string, title: string) => {
-        dispatch(changeTodolistTitle(todolistId, title))
-    }, [dispatch])
-    const dispatchChangeTaskStatus = useCallback((todolistId: string, taskId: string, status: boolean) => {
-        dispatch(changeTaskStatusAC(todolistId, taskId, status))
+    const dispatchDeleteTask = useCallback((id: string, todolistId: string) => {
+        dispatch(deleteTaskTC(todolistId, id))
     }, [dispatch])
 
-    console.log('Task')
+    const dispatchUpdateTask = useCallback((todolistId: string, taskId: string, modal: TaskDomainType) => {
+        dispatch(updateTaskTC(todolistId, taskId, modal))
+    }, [dispatch])
+
     return (
         <li key={task.id} className={style.li}>
             <Checkbox
                 checked={TaskStatus[task.status] !== "new"}
                 readOnly={true}
-                onChange={(e) => dispatchChangeTaskStatus(todolistId, task.id, e.currentTarget.checked)}
+                onChange={(e) => dispatchUpdateTask(todolistId, task.id, {status: e.currentTarget.checked ? 1 : 0})}
                 className={task.status ? s.completeTask : ''}
             />
-            <EditebleSpan id={task.id} title={task.title} dispatch={dispatchChangeTodolistTitle}/>
+            <EditebleSpan todolistId={todolistId} taskId={task.id} title={task.title} dispatch={dispatchUpdateTask}/>
 
-            <Button onClick={() => dispatchRemoveTask(task.id, todolistId)}>
+            <Button onClick={() => dispatchDeleteTask(task.id, todolistId)}>
                 <HighlightOff color={"primary"}/>
             </Button>
         </li>

@@ -7,7 +7,6 @@ import {TodolistType} from "../../store/todolist-reducer";
 
 
 export const Todolists = React.memo(() => {
-    console.log('Todolists')
 
     const todolists = useSelector<storeType, Array<TodolistType>>((store) => store.todolistReducer)
     const renderTodolists = useCallback(() => {

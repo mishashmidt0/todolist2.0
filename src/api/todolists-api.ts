@@ -14,10 +14,8 @@ class TodoAPI {
         return this.instance.get("todo-lists")
     }
 
-    postTodo(title: string, setTodo: (item: any) => void) {
-        this.instance.post("todo-lists", {title: title}).then(res => {
-            setTodo(res.data)
-        })
+    addTodolist(title: string) {
+        return this.instance.post("todo-lists", {title: title})
     }
 
     deleteAllTodo(setTodo: (data: Array<{}>) => void) {
@@ -33,24 +31,12 @@ class TodoAPI {
         )
     }
 
-    deleteTodolistById(id: string, setTodo: (data: Array<{}>) => void) {
-        this.instance.delete(`todo-lists/${id}`)
-            .then(res => {
-                setTodo(res.data)
-            })
-            .catch(err => {
-                setTodo(err.response.data.message)
-            })
+    deleteTodolistById(id: string) {
+        return this.instance.delete(`todo-lists/${id}`)
     }
 
-    updateTodo(id: string, title: string, setTodo: (data: Array<{}>) => void) {
-        this.instance.put(`todo-lists/${id}`, {title: title})
-            .then(res => {
-                setTodo(res.data)
-            })
-            .catch(err => {
-                setTodo(err.response.data.message)
-            })
+    updateTodo(id: string, title: string) {
+       return this.instance.put(`todo-lists/${id}`, {title: title})
     }
 
 }

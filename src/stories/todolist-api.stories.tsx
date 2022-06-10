@@ -33,7 +33,7 @@ export const postTodolist = () => {
 
 
     const creatPost = () => {
-        todoAPI.postTodo(text, setTodo)
+        todoAPI.addTodolist(text)
     }
 
     return <div>
@@ -57,7 +57,9 @@ export const deleteTodolist = () => {
     const [text, setText] = useState<string>('')
 
     const deleteTodo = () => {
-        todoAPI.deleteTodolistById(text, setTodo)
+        todoAPI.deleteTodolistById(text).then(res => {
+            setTodo(res.data)
+        })
 
     }
     return <div>
@@ -73,7 +75,7 @@ export const updateTodolist = () => {
     const [id, setId] = useState<any>(null)
 
     const update = () => {
-        todoAPI.updateTodo(id, text, setTodo)
+        todoAPI.updateTodo(id, text)
     }
     return <div>
         <input type="text" value={text} onChange={(e) => setText(e.target.value)} placeholder={'new text'}/>

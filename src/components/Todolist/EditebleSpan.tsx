@@ -3,21 +3,22 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {TextField} from "@material-ui/core";
 
 export type EditebleSpanPropsType = {
+    todolistId: string
+    taskId?: string
     title: string
-    id: string
     dispatch: any
 }
 
-export const EditebleSpan = React.memo(({id, title, dispatch}: EditebleSpanPropsType) => {
-        console.log('EditebleSpan')
+export const EditebleSpan = React.memo(({todolistId, taskId, title, dispatch}: EditebleSpanPropsType) => {
+
         let [editMode, setEditMode] = useState<boolean>(false);
-        let [titleH, setTitle] = useState(title);
+        let [newTitle, setTitle] = useState(title);
 
         const activateEditMode = () => {
             setEditMode(true)
         }
         const activateViewMode = () => {
-            dispatch(id, title)
+            dispatch(todolistId, taskId, {title: newTitle})
             setEditMode(false)
         }
         const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -25,21 +26,21 @@ export const EditebleSpan = React.memo(({id, title, dispatch}: EditebleSpanProps
         }
         const onkeypress = (e: KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter') {
-                dispatch(id, title)
+                dispatch(todolistId, taskId, {title: newTitle})
                 setEditMode(false)
             }
         }
 
         return (
             editMode ? <TextField
-                    value={titleH}
+                    value={newTitle}
                     onBlur={activateViewMode}
                     autoFocus
                     onChange={onChangeTitleHandler}
                     onKeyPress={onkeypress}
                 />
 
-                : <span onDoubleClick={activateEditMode}>{titleH}</span>
+                : <span onDoubleClick={activateEditMode}>{newTitle}</span>
         )
     }
 )

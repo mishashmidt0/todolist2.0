@@ -5,6 +5,7 @@ import {TaskType} from "../../api/tasks-api";
 
 
 test('ids should be equals', () => {
+
     const startTasksState: tasksStateType = {};
     const startTodolistState: Array<TodolistType> = [];
 
@@ -20,7 +21,6 @@ test('ids should be equals', () => {
     expect(idFromTasks).toBe(action.id)
     expect(idFromTodolists).toBe(action.id)
 })
-
 
 test('ids should be remove ', () => {
     const startTasksState: tasksStateType = {

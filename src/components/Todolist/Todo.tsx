@@ -1,11 +1,11 @@
-import React, {Dispatch, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditebleSpan} from "./EditebleSpan";
 import Button from "@material-ui/core/Button";
 import {DeleteOutline} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
-import {addTaskAC, setTaskCT, tasksStateType,} from "../../store/tasks-reducer";
-import {changeTodolistTitle, removeTodolist} from "../../store/todolist-reducer";
+import {addTaskTC, setTaskTC, tasksStateType,} from "../../store/tasks-reducer";
+import {removeTodolistTC, updateTodolistTC} from "../../store/todolist-reducer";
 import {Tasks} from "./Tasks";
 import {FilterButton} from "./FilterButton";
 import {storeType} from "../../store/redux";
@@ -22,7 +22,7 @@ export const Todo = React.memo(({todolistId, title}: todolistTypeProps) => {
     const dispatch = useDispatch<any>()
 
     useEffect(() => {
-        dispatch(setTaskCT(todolistId))
+        dispatch(setTaskTC(todolistId))
     }, [])
 
 
@@ -30,22 +30,22 @@ export const Todo = React.memo(({todolistId, title}: todolistTypeProps) => {
 
     const [isActive, setActive] = useState<isActiveType>('all')
 
-    const dispatchChangeTodolistTitle = useCallback((id: string, title: string) => {
-        dispatch(changeTodolistTitle(id, title))
+    const dispatchUpdateTodolist = useCallback((todolistId: string, taskId: string, {title}: { title: string }) => {
+        dispatch(updateTodolistTC(todolistId, title))
     }, [dispatch])
 
     const dispatchAddTask = useCallback((titleTask: string) => {
-        dispatch(addTaskAC(todolistId, titleTask))
+        dispatch(addTaskTC(titleTask, todolistId))
     }, [dispatch, todolistId])
 
     const dispatchRemoveTodolist = useCallback(() => {
-        dispatch(removeTodolist(todolistId))
+        dispatch(removeTodolistTC(todolistId))
     }, [dispatch, todolistId])
 
     return (<div>
         <h3>
-            <EditebleSpan id={todolistId} title={title}
-                          dispatch={dispatchChangeTodolistTitle}/>
+            <EditebleSpan todolistId={todolistId} title={title}
+                          dispatch={dispatchUpdateTodolist}/>
 
             <Button onClick={() => {
                 dispatchRemoveTodolist()

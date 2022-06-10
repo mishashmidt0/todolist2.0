@@ -33,19 +33,16 @@ class TaskAPI {
         return this.instance.get<any>(`todo-lists/${todolistId}/tasks`)
     }
 
-    postTask(title: string, todolistId: string, setTodo: (el: Object[]) => void) {
-        this.instance.post(`todo-lists/${todolistId}/tasks`, {title: title})
-            .then(res => {
-                setTodo(res.data)
-            })
+    addTask(title: string, todolistId: string) {
+        return this.instance.post(`todo-lists/${todolistId}/tasks`, {title: title})
     }
 
     deleteTask(todolistId: string, taskId: string) {
-        return this.instance.get(`/todo-lists/${todolistId}/tasks/${taskId}`)
+        return this.instance.delete(`/todo-lists/${todolistId}/tasks/${taskId}`)
     }
 
-    updateTask(todolistId: string, taskId: string, title: string) {
-        return this.instance.put(`/todo-lists/${todolistId}/tasks/${taskId}`, {title: title})
+    updateTask(todolistId: string, taskId: string, task: TaskType) {
+        return this.instance.put(`/todo-lists/${todolistId}/tasks/${taskId}`, task)
     }
 
 }
