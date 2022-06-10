@@ -1,9 +1,8 @@
 import {
     addTodolist,
     changeTodolistFilter,
-    changeTodolistTitle,
     removeTodolist, setAllTodo,
-    todolistReducer, TodolistType
+    todolistReducer, TodolistType, updateTodolist
 } from "../todolist-reducer";
 import {v1} from "uuid";
 
@@ -42,7 +41,7 @@ test('correct todolist should add items', () => {
 test('correct todolist should change it is name', () => {
 
     let newTextTitle = 'New text'
-    const endState = todolistReducer(startState, changeTodolistTitle(todolistId1, newTextTitle))
+    const endState = todolistReducer(startState, updateTodolist(todolistId1, newTextTitle))
 
     expect(endState.length).toBe(2);
     expect(endState[0].title).toBe(newTextTitle);

@@ -33,7 +33,9 @@ export const postTask = () => {
 
 
     const createTask = () => {
-        taskAPI.postTask(text, todolistId, setTodo)
+        taskAPI.addTask(text, todolistId).then(res=>{
+            setTodo(res.data)
+        })
     }
 
     return <div>
