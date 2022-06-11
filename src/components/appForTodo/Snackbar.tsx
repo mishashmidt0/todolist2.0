@@ -1,6 +1,9 @@
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
+import {coverType, getStatusTodolist, statusType} from "../../store/app-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {storeType} from "../../store/redux";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -9,27 +12,27 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function Snackbars() {
+type SnackbarsType = {
+    status: statusType,
+    message: string,
+    cover?: coverType
+}
 
-    const [open, setOpen] = React.useState(false);
-
-    const handleClick = () => {
-        setOpen(true);
-    };
+export function Snackbars() {
+    const dispatch = useDispatch()
+    const todolist = useSelector<storeType, SnackbarsType>(state => state.app.todolist)
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-
-        setOpen(false);
-
+        dispatch(getStatusTodolist("inq"))
     };
 
     return (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="success" sx={{width: '100%'}}>
-                This is a success message!
+        <Snackbar open={todolist.status == "ready"} autoHideDuration={3000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity={todolist.cover} sx={{width: '100%'}}>
+                {todolist.message}
             </Alert>
         </Snackbar>
     );

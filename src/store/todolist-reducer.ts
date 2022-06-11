@@ -1,5 +1,6 @@
 import todoAPI from "../api/todolists-api";
 import {Dispatch} from "redux";
+import {getStatusTodolist} from "./app-reducer";
 
 const initialState: Array<TodolistType> = []
 export const todolistReducer = (todolist: Array<TodolistType> = initialState, action: todolistType): Array<TodolistType> => {
@@ -60,6 +61,7 @@ export const addTodolistTC = (title: string) => {
         todoAPI.addTodolist(title)
             .then(res => {
                 dispatch(addTodolist(res.data.data.item.id, res.data.data.item.title))
+                dispatch(getStatusTodolist("ready"))
             })
     }
 }

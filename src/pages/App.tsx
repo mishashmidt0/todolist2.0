@@ -6,7 +6,7 @@ import {addTodolistTC, setTodo} from "../store/todolist-reducer";
 import {Header} from "../components/Todolist/Header";
 import {Todolists} from "../components/Todolist/TodoLists";
 import {useDispatch} from "react-redux";
-import Snackbars from "../components/appForTodo/Snackbar";
+import {Snackbars} from "../components/appForTodo/Snackbar";
 
 
 const App = React.memo(() => {
@@ -23,16 +23,12 @@ const App = React.memo(() => {
     return (
         <div>
             <Header/>
+            <Container fixed>
+                <AddItemForm dispatch={dispatchAddTodolist}/>
+                <Todolists/>
+            </Container>
 
             <Snackbars/>
-
-            <Container fixed>
-
-                <AddItemForm dispatch={dispatchAddTodolist}/>
-
-                <Todolists/>
-
-            </Container>
         </div>
     );
 })

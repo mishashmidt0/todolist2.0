@@ -1,51 +1,57 @@
-import {Dispatch} from "react";
-
-
 const initialState: appStateType = {
-    getTodolist: "ready",
-    addTodolist: "ready",
-    getTasks: "ready",
-    addTask: "ready",
+    todolist: {
+        status: "inq",
+        message: "Todolist added",
+        cover: "success"
+    },
+    task: {
+        status: "inq",
+        message: "Task added",
+        cover: "success"
+    }
 }
 
 export const appReducer = (app: appStateType = initialState, action: appReducer): appStateType => {
 
     switch (action.type) {
         case "STATUS-TODOLIST":
-            return {...app, ...action.model}
+            return {...app, todolist: {...app.todolist, status: action.status}}
         case "STATUS-TASK":
-            return {...app, ...action.model}
+            return {...app, todolist: {...app.task, status: action.status}}
         default:
             return app
     }
 }
 // action
-export const getStatusTodolist = (model: appStateModelType) => ({type: "STATUS-TODOLIST", model} as const)
-export const getStatusTask = (model: appStateModelType) => ({type: "STATUS-TASK", model} as const)
-
-// thunk
-export const setTaskTC = (todolistId: string) => {
-    return (dispatch: any) => {
-        // taskAPI.getTasks(todolistId)
-        //     .then(res => {
-        //         dispatch(setTasks(todolistId, res.data.items))
-        //     })
-    }
-}
+export const getStatusTodolist = (status: statusType) => ({type: "STATUS-TODOLIST", status} as const)
+export const getStatusTask = (status: statusType) => ({type: "STATUS-TASK", status} as const)
 
 // type
-type statusType = "inq" | "loading" | "ready" | "error"
+export type statusType = "inq" | "loading" | "ready" | "error"
+export type coverType = "success" | "warning" | "info" | "error"
 export type appStateType = {
-    getTodolist: statusType,
-    addTodolist: statusType,
-    getTasks: statusType,
-    addTask: statusType,
+    todolist: {
+        status: statusType,
+        message: string,
+        cover: coverType
+    },
+    task: {
+        status: statusType,
+        message: string,
+        cover: coverType
+    }
 }
 export type appStateModelType = {
-    getTodolist?: statusType,
-    addTodolist?: statusType,
-    getTasks?: statusType,
-    addTask?: statusType,
+    todolist?: {
+        status: statusType,
+        message: string,
+        cover?: coverType
+    },
+    task?: {
+        status: statusType,
+        message: string,
+        cover?: coverType
+    }
 }
 
 export type appReducer =
