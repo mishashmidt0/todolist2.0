@@ -3,6 +3,7 @@ import {AppBar, Button, IconButton, Toolbar, Typography} from "@material-ui/core
 import {Menu} from "@material-ui/icons";
 
 
+
 export const Header = React.memo(() => {
     console.log("header")
     return (
@@ -16,6 +17,7 @@ export const Header = React.memo(() => {
                 </Typography>
                 <Button color="inherit">Login</Button>
             </Toolbar>
+
         </AppBar>
     )
 })

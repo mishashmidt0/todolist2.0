@@ -1,4 +1,5 @@
 import axios from "axios";
+import {TaskDomainType} from "../store/tasks-reducer";
 
 
 export type TaskType = {
@@ -41,7 +42,7 @@ class TaskAPI {
         return this.instance.delete(`/todo-lists/${todolistId}/tasks/${taskId}`)
     }
 
-    updateTask(todolistId: string, taskId: string, task: TaskType) {
+    updateTask(todolistId: string, taskId: string, task: TaskDomainType) {
         return this.instance.put(`/todo-lists/${todolistId}/tasks/${taskId}`, task)
     }
 

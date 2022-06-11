@@ -28,7 +28,7 @@ export const taskReducer = (task: tasksStateType = initialState, action: taskRed
             return {
                 ...task,
                 [action.todolistId]: task[action.todolistId].map(t => t.id === action.taskId
-                    ? {...action.task} : t
+                    ? {...t, ...action.task} : t
                 )
             }
         case 'ADD-TODOLIST':
@@ -59,7 +59,7 @@ export const changeTaskTitleAC = (idTodolist: string, id: string, title: string)
     id,
     title
 } as const)
-export const updateTask = (todolistId: string, taskId: string, task: TaskType) => ({
+export const updateTask = (todolistId: string, taskId: string, task: TaskDomainType) => ({
     type: 'UPDATE-TASK',
     todolistId,
     taskId,
@@ -103,15 +103,10 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: TaskDoma
         const newTask = {
             description: task.description,
             title: task.title,
-            completed: task.completed,
             status: task.status,
             priority: task.priority,
             startDate: task.startDate,
             deadline: task.deadline,
-            id: task.id,
-            todoListId: task.todoListId,
-            order: task.order,
-            addedDate: task.addedDate,
             ...model
         }
         taskAPI.updateTask(todolistId, taskId, newTask)
@@ -125,15 +120,10 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: TaskDoma
 export type TaskDomainType = {
     description?: string,
     title?: string,
-    completed?: boolean,
     status?: number,
     priority?: number,
     startDate?: string,
     deadline?: string,
-    id?: string,
-    todoListId?: string,
-    order?: number,
-    addedDate?: string,
 }
 export type tasksStateType = { [key: string]: TaskType[] };
 export type filterTypeTask = {
