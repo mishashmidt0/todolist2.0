@@ -27,6 +27,7 @@ export const TaskBaseExample = () => {
                 todoListId: 'todolistId2',
                 addedDate: '',
                 order: 0,
+                editableStatus: "idle"
             }}
             todolistId={"todolist2"}
         />
@@ -44,6 +45,7 @@ export const TaskBaseExample = () => {
                 todoListId: 'todolistId2',
                 addedDate: '',
                 order: 0,
+                editableStatus: "idle"
             }}
             todolistId={"todolist1"}/>
     </Provider>

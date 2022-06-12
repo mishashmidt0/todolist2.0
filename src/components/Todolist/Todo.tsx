@@ -9,16 +9,17 @@ import {removeTodolistTC, updateTodolistTC} from "../../store/todolist-reducer";
 import {Tasks} from "./Tasks";
 import {FilterButton} from "./FilterButton";
 import {storeType} from "../../store/redux";
-
+import s from "./styleTodoList.module.css";
 
 export type isActiveType = 'all' | 'active' | 'completed';
 type todolistTypeProps = {
     todolistId: string
     title: string
+    disable: boolean
 }
 
 
-export const Todo = React.memo(({todolistId, title}: todolistTypeProps) => {
+export const Todo = React.memo(({todolistId, title, disable}: todolistTypeProps) => {
     const dispatch = useDispatch<any>()
 
     useEffect(() => {
@@ -45,18 +46,16 @@ export const Todo = React.memo(({todolistId, title}: todolistTypeProps) => {
     return (<div>
         <h3>
             <EditebleSpan todolistId={todolistId} title={title}
-                          dispatch={dispatchUpdateTodolist}/>
+                          dispatch={dispatchUpdateTodolist} disable={disable}/>
 
-            <Button onClick={() => {
-                dispatchRemoveTodolist()
-            }}>
+            <Button onClick={dispatchRemoveTodolist} disabled={disable}>
                 <DeleteOutline/>
             </Button>
         </h3>
 
-        <AddItemForm dispatch={dispatchAddTask}/>
+        <AddItemForm dispatch={dispatchAddTask} disable={disable}/>
 
-        <ul>
+        <ul className={s.listTask}>
             <Tasks todolistId={todolistId} tasks={todolistTasks} filter={isActive}/>
         </ul>
 

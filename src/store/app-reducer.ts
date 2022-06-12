@@ -1,56 +1,47 @@
-import {Dispatch} from "react";
-
-
 const initialState: appStateType = {
-    getTodolist: "ready",
-    addTodolist: "ready",
-    getTasks: "ready",
-    addTask: "ready",
+    status: "inq",
+    message: "",
+    cover: "success",
+    loading: "ready"
 }
 
 export const appReducer = (app: appStateType = initialState, action: appReducer): appStateType => {
 
     switch (action.type) {
-        case "STATUS-TODOLIST":
+        case "STATUS-CHANGE":
             return {...app, ...action.model}
-        case "STATUS-TASK":
-            return {...app, ...action.model}
+        case "LOADING-CHANGE":
+            return {...app, loading: action.loading}
         default:
             return app
     }
 }
 // action
-export const getStatusTodolist = (model: appStateModelType) => ({type: "STATUS-TODOLIST", model} as const)
-export const getStatusTask = (model: appStateModelType) => ({type: "STATUS-TASK", model} as const)
+export const changeStatus = (model: appStateModelType) => ({type: "STATUS-CHANGE", model} as const)
+export const changeLoading = (loading: "ready" | "loading") => ({type: "LOADING-CHANGE", loading} as const)
 
-// thunk
-export const setTaskTC = (todolistId: string) => {
-    return (dispatch: any) => {
-        // taskAPI.getTasks(todolistId)
-        //     .then(res => {
-        //         dispatch(setTasks(todolistId, res.data.items))
-        //     })
-    }
-}
 
 // type
-type statusType = "inq" | "loading" | "ready" | "error"
+export type statusType = "inq" | "loading" | "ready" | "error"
+export type coverType = "success" | "warning" | "info" | "error"
 export type appStateType = {
-    getTodolist: statusType,
-    addTodolist: statusType,
-    getTasks: statusType,
-    addTask: statusType,
+    status: statusType,
+    message: string,
+    cover: coverType
+    loading: "ready" | "loading"
 }
 export type appStateModelType = {
-    getTodolist?: statusType,
-    addTodolist?: statusType,
-    getTasks?: statusType,
-    addTask?: statusType,
+    status: statusType,
+    message?: string,
+    cover?: coverType,
+    loading?: "ready" | "loading"
 }
-
+export type changeStatusType = ReturnType<typeof changeStatus>
+export type changeLoadingType = ReturnType<typeof changeLoading>
 export type appReducer =
-    | ReturnType<typeof getStatusTodolist>
-    | ReturnType<typeof getStatusTask>
+    | changeStatusType
+    | changeLoadingType
+
 
 
 

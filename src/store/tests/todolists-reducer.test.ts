@@ -1,6 +1,6 @@
 import {
     addTodolist,
-    changeTodolistFilter,
+    changeTodolistFilter, changeTodolistStatus, changeTodolistStatusType,
     removeTodolist, setAllTodo,
     todolistReducer, TodolistType, updateTodolist
 } from "../todolist-reducer";
@@ -16,8 +16,8 @@ beforeEach(() => {
     todolistId2 = v1();
 
     startState = [
-        {id: todolistId1, title: "What to learn", filter: 'all', order: 0, addedDate: "02.02.2002"},
-        {id: todolistId2, title: "What to by", filter: 'all', order: 0, addedDate: "02.02.2002"}
+        {id: todolistId1, title: "What to learn", filter: 'all', order: 0, addedDate: "02.02.2002", editableStatus: "idle"},
+        {id: todolistId2, title: "What to by", filter: 'all', order: 0, addedDate: "02.02.2002", editableStatus: "idle"}
     ];
 })
 
@@ -66,4 +66,11 @@ test('must set Todolist', () => {
     const endState = todolistReducer(stateEmpty, setAllTodo(startState))
 
     expect(endState.length).toBe(2);
+})
+
+test('should change todolist status', () => {
+
+    const endState = todolistReducer(startState, changeTodolistStatus(todolistId1, "loading"))
+
+    expect(endState[0].editableStatus).toBe("loading");
 })
