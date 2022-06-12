@@ -7,14 +7,18 @@ export type EditebleSpanPropsType = {
     taskId?: string
     title: string
     dispatch: any
+    disable?: boolean
 }
 
-export const EditebleSpan = React.memo(({todolistId, taskId, title, dispatch}: EditebleSpanPropsType) => {
+export const EditebleSpan = React.memo(({todolistId, taskId, title, dispatch, disable = false}: EditebleSpanPropsType) => {
 
         let [editMode, setEditMode] = useState<boolean>(false);
         let [newTitle, setTitle] = useState(title);
 
         const activateEditMode = () => {
+            if (disable) {
+                return
+            }
             setEditMode(true)
         }
         const activateViewMode = () => {

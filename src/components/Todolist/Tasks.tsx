@@ -1,9 +1,7 @@
 import React, {useCallback} from "react";
-import {tasksStateType} from "../../store/tasks-reducer";
-
+import {tasksStateType, TaskType} from "../../store/tasks-reducer";
 import {isActiveType} from "./Todo";
 import {Task} from "./Task";
-import {TaskType} from "../../api/tasks-api";
 
 
 type TaskPropsType = {

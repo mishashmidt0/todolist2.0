@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, {AlertProps} from '@mui/material/Alert';
-import {coverType, getStatusTodolist, statusType} from "../../store/app-reducer";
+import {changeStatus, coverType, statusType} from "../../store/app-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {storeType} from "../../store/redux";
 
@@ -20,19 +20,20 @@ type SnackbarsType = {
 
 export function Snackbars() {
     const dispatch = useDispatch()
-    const todolist = useSelector<storeType, SnackbarsType>(state => state.app.todolist)
+    const app = useSelector<storeType, SnackbarsType>(state => state.app)
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
-        dispatch(getStatusTodolist("inq"))
+        dispatch(changeStatus({status: "inq"}))
     };
 
+
     return (
-        <Snackbar open={todolist.status == "ready"} autoHideDuration={3000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity={todolist.cover} sx={{width: '100%'}}>
-                {todolist.message}
+        <Snackbar open={app.status == "ready"} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{vertical: "bottom", horizontal: "center"}}>
+            <Alert onClose={handleClose} severity={app.cover} sx={{width: '100%'}}>
+                {app.message}
             </Alert>
         </Snackbar>
     );

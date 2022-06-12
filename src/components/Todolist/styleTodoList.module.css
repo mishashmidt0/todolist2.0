@@ -1,3 +1,15 @@
+.listTask {
+    position: relative;
+    right: 70px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     list-style-type: none;
 }

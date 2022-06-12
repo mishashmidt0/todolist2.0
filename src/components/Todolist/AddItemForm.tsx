@@ -2,9 +2,11 @@ import React, {useState} from "react";
 import {Grid, IconButton, TextField} from "@material-ui/core";
 import {ControlPoint} from "@material-ui/icons";
 
-
-
-export const AddItemForm = React.memo(({dispatch}: any) => {
+type AddItemFormType = {
+    dispatch: any,
+    disable?: boolean
+}
+export const AddItemForm = React.memo(({dispatch, disable = false}: AddItemFormType) => {
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState('');
@@ -41,8 +43,9 @@ export const AddItemForm = React.memo(({dispatch}: any) => {
                 onKeyPress={onKeyPress}
                 error={!!error}
                 helperText={error}
+                disabled={disable}
             />
-            <IconButton onClick={addTask} color="primary"><ControlPoint/></IconButton>
+            <IconButton onClick={addTask} color="primary" disabled={disable}><ControlPoint/></IconButton>
         </Grid>
     </div>);
 })

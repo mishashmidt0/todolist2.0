@@ -2,7 +2,7 @@ import axios from "axios";
 import {TaskDomainType} from "../store/tasks-reducer";
 
 
-export type TaskType = {
+export type TaskDBType = {
     description: string,
     title: string,
     completed: boolean,
@@ -18,7 +18,7 @@ export type TaskType = {
 export type GetTaskResponse = {
     error: string | null,
     totalCount: number,
-    items: TaskType[]
+    items: TaskDBType[]
 }
 
 class TaskAPI {

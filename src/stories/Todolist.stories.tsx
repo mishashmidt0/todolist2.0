@@ -13,5 +13,5 @@ export default {
 // const changeTodolist = action("Todo changed")
 
 export const TodolistBaseExample = () => {
-    return <Todo todolistId={"todolist1"} title={"Test Todo"}/>
+    return <Todo todolistId={"todolist1"} title={"Test Todo"} disable={false}/>
 }

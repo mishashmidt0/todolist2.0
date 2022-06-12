@@ -1,13 +1,12 @@
 import React, {useCallback} from "react";
 import {Checkbox} from "@material-ui/core";
-import {deleteTaskTC, TaskDomainType, updateTaskTC} from "../../store/tasks-reducer";
+import {deleteTaskTC, TaskDomainType, TaskType, updateTaskTC} from "../../store/tasks-reducer";
 import s from "./styleTodoList.module.css";
+import style from "./styleTodoList.module.css";
 import {EditebleSpan} from "./EditebleSpan";
 import Button from "@material-ui/core/Button";
 import {HighlightOff} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
-import style from './styleTodoList.module.css';
-import {TaskType} from "../../api/tasks-api";
 
 
 type taskPropsType = {
@@ -38,11 +37,13 @@ export const Task = React.memo(({todolistId, task}: taskPropsType) => {
                 readOnly={true}
                 onChange={(e) => dispatchUpdateTask(todolistId, task.id, {status: e.currentTarget.checked ? 1 : 0})}
                 className={task.status ? s.completeTask : ''}
+                disabled={task.editableStatus === "loading"}
             />
-            <EditebleSpan todolistId={todolistId} taskId={task.id} title={task.title} dispatch={dispatchUpdateTask}/>
+            <EditebleSpan todolistId={todolistId} taskId={task.id} title={task.title} dispatch={dispatchUpdateTask}
+                          disable={task.editableStatus === "loading"}/>
 
-            <Button onClick={() => dispatchDeleteTask(task.id, todolistId)}>
-                <HighlightOff color={"primary"}/>
+            <Button onClick={() => dispatchDeleteTask(task.id, todolistId)} disabled={task.editableStatus === "loading"}>
+                <HighlightOff color={task.editableStatus === "loading" ? "disabled" : "primary"}/>
             </Button>
         </li>
     )

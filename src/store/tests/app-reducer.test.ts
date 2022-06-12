@@ -1,41 +1,47 @@
-import {appReducer, appStateType, getStatusTodolist} from "../app-reducer";
+import {appReducer, appStateType, changeLoading, changeStatus} from "../app-reducer";
 
 
 let startState: appStateType
 
 beforeEach(() => {
     startState = {
-        todolist: {
-            status: "inq",
-            message: "",
-            cover: "success"
-        },
-        task: {
-            status: "inq",
-            message: "",
-            cover: "success"
-        }
+        status: "inq",
+        message: "",
+        cover: "success",
+        loading: "ready"
     }
 })
 
 
 test('correct status should be change', () => {
 
-    const endState = appReducer(startState, getStatusTodolist("loading"))
+    const endState = appReducer(startState, changeStatus({status: "loading"}))
 
     const keys = Object.keys(endState)
 
-    expect(endState.todolist.status).toBe("loading");
-    expect(keys.length).toBe(2)
+    expect(endState.status).toBe("loading");
+    expect(keys.length).toBe(4)
 })
 
-test('correct status should be change', () => {
+test('correct status should be error', () => {
 
-    const endState = appReducer(startState, getStatusTodolist("error"))
+    const endState = appReducer(startState, changeStatus({status: "error", cover: "error", message: "Task to mush long"}))
+
 
     const keys = Object.keys(endState)
 
-    expect(endState.todolist.status).toBe("error");
-    expect(keys.length).toBe(2);
+    expect(endState.status).toBe("error");
+    expect(endState.message).toBe("Task to mush long");
+    expect(endState.cover).toBe("error");
+    expect(keys.length).toBe(4);
 
+})
+
+test('correct loading should be change', () => {
+
+    const endState = appReducer(startState, changeLoading("loading"))
+
+    const keys = Object.keys(endState)
+
+    expect(endState.loading).toBe("loading");
 })

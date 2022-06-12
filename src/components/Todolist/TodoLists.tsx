@@ -14,7 +14,7 @@ export const Todolists = React.memo(() => {
             return (
                 <Grid item key={todolist.id}>
                     <Paper style={{padding: '10px'}}>
-                        <Todo todolistId={todolist.id} title={todolist.title}/>
+                        <Todo todolistId={todolist.id} title={todolist.title} disable={todolist.editableStatus === "loading"}/>
                     </Paper>
                 </Grid>)
         })

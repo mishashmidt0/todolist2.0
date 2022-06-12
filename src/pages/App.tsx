@@ -7,6 +7,7 @@ import {Header} from "../components/Todolist/Header";
 import {Todolists} from "../components/Todolist/TodoLists";
 import {useDispatch} from "react-redux";
 import {Snackbars} from "../components/appForTodo/Snackbar";
+import LinearIndeterminate from "../components/appForTodo/LinarLoading";
 
 
 const App = React.memo(() => {
@@ -23,11 +24,11 @@ const App = React.memo(() => {
     return (
         <div>
             <Header/>
+            <LinearIndeterminate/>
             <Container fixed>
                 <AddItemForm dispatch={dispatchAddTodolist}/>
                 <Todolists/>
             </Container>
-
             <Snackbars/>
         </div>
     );
