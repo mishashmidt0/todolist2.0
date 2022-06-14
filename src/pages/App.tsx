@@ -8,6 +8,8 @@ import {Todolists} from "../components/Todolist/TodoLists";
 import {useDispatch} from "react-redux";
 import {Snackbars} from "../components/appForTodo/Snackbar";
 import LinearIndeterminate from "../components/appForTodo/LinarLoading";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Login} from "../components/login/login";
 
 
 const App = React.memo(() => {
@@ -22,15 +24,19 @@ const App = React.memo(() => {
     }, [])
 
     return (
-        <div>
-            <Header/>
-            <LinearIndeterminate/>
-            <Container fixed>
-                <AddItemForm dispatch={dispatchAddTodolist}/>
-                <Todolists/>
-            </Container>
-            <Snackbars/>
-        </div>
+        <BrowserRouter>
+            <div>
+                <Header/>
+                <LinearIndeterminate/>
+                <Container fixed>
+                    <Routes>
+                        <Route path={"/"} element={<><AddItemForm dispatch={dispatchAddTodolist}/><Todolists/></>}/>
+                        <Route path={"/login"} element={<Login/>}/>
+                    </Routes>
+                </Container>
+                <Snackbars/>
+            </div>
+        </BrowserRouter>
     );
 })
 
