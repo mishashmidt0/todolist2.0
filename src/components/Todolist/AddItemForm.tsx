@@ -23,6 +23,7 @@ export const AddItemForm = React.memo(({dispatch, disable = false}: AddItemFormT
             return;
         }
         dispatch(title)
+        if (title.length > 100) return
         setTitle('');
     };
 

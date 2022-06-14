@@ -1,6 +1,7 @@
 import todoAPI from "../api/todolists-api";
 import {Dispatch} from "redux";
 import {changeLoading, changeStatus} from "./app-reducer";
+import {handleNetworkAppError, handleServerAppError} from "../util/handle-app-utils";
 
 const initialState: Array<TodolistType> = []
 export const todolistReducer = (todolist: Array<TodolistType> = initialState, action: todolistType): Array<TodolistType> => {
@@ -51,6 +52,9 @@ export const setTodo = () => {
                 dispatch(setAllTodo(res.data))
                 dispatch(changeLoading("ready"))
             })
+            .catch(err => {
+                handleNetworkAppError(err, dispatch)
+            })
     }
 }
 
@@ -64,6 +68,9 @@ export const removeTodolistTC = (todolistId: string) => {
                 dispatch(changeLoading("ready"))
                 dispatch(changeStatus({status: "ready", message: "Todolist deleted", cover: "info"}))
             })
+            .catch(err => {
+                handleNetworkAppError(err, dispatch)
+            })
     }
 }
 
@@ -72,9 +79,17 @@ export const addTodolistTC = (title: string) => {
         dispatch(changeLoading("loading"))
         todoAPI.addTodolist(title)
             .then(res => {
-                dispatch(addTodolist(res.data.data.item.id, res.data.data.item.title))
+                if (res.data.resultCode === 0) {
+                    dispatch(addTodolist(res.data.data.item.id, res.data.data.item.title))
+                    dispatch(changeLoading("ready"))
+                    dispatch(changeStatus({status: "ready", message: "Todolist added", cover: "success"}))
+                } else {
+                    handleServerAppError(res, dispatch)
+                }
                 dispatch(changeLoading("ready"))
-                dispatch(changeStatus({status: "ready", message: "Todolist added"}))
+            })
+            .catch(err => {
+                handleNetworkAppError(err, dispatch)
             })
     }
 }
@@ -83,7 +98,15 @@ export const updateTodolistTC = (todolistId: string, title: string) => {
     return (dispatch: Dispatch<any>) => {
         todoAPI.updateTodo(todolistId, title)
             .then(res => {
-                dispatch(updateTodolist(todolistId, title))
+                if (res.data.resultCode === 0) {
+                    dispatch(updateTodolist(todolistId, title))
+                } else {
+                    handleServerAppError(res, dispatch)
+                }
+
+            })
+            .catch(err => {
+                handleNetworkAppError(err, dispatch)
             })
     }
 }
