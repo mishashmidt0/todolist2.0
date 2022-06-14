@@ -3,6 +3,7 @@ import {Dispatch} from "react";
 import taskAPI, {TaskDBType} from "../api/tasks-api";
 import {storeType} from "./redux";
 import {changeLoading, changeLoadingType, changeStatus, changeStatusType} from "./app-reducer";
+import {handleNetworkAppError, handleServerAppError} from "../util/handle-app-utils";
 
 const initialState: tasksStateType = {}
 export const taskReducer = (task: tasksStateType = initialState, action: taskReducerAT): tasksStateType => {
@@ -93,6 +94,9 @@ export const setTaskTC = (todolistId: string) => {
                 dispatch(setTasks(todolistId, res.data.items))
                 dispatch(changeLoading("ready"))
             })
+            .catch(err => {
+                handleNetworkAppError(err, dispatch)
+            })
     }
 }
 
@@ -105,12 +109,13 @@ export const addTaskTC = (title: string, todolistId: string) => {
                     const task = res.data.data.item
                     dispatch(addTaskAC(task))
                     dispatch(changeStatus({status: "ready", message: "Task added", cover: "success"}))
-                } else if (res.data.resultCode === 1) {
-                    dispatch(changeStatus({status: "ready", message: res.data.messages[0], cover: "error"}))
                 } else {
-                    dispatch(changeStatus({status: "ready", message: "Error added task", cover: "error"}))
+                    handleServerAppError(res, dispatch)
                 }
                 dispatch(changeLoading("ready"))
+            })
+            .catch(err => {
+                handleNetworkAppError(err, dispatch)
             })
     }
 }
@@ -124,6 +129,9 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => {
                 dispatch(removeTaskAC(todolistId, taskId))
                 dispatch(changeStatus({status: "ready", message: "Task deleted", cover: "info"}))
                 dispatch(changeLoading("ready"))
+            })
+            .catch(err => {
+                handleNetworkAppError(err, dispatch)
             })
     }
 }
@@ -142,13 +150,21 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: TaskDoma
         }
         taskAPI.updateTask(todolistId, taskId, newTask)
             .then(res => {
-                console.log(res)
-                dispatch(updateTask(todolistId, taskId, res.data.data.item))
+                if (res.data.resultCode === 0) {
+                    dispatch(updateTask(todolistId, taskId, res.data.data.item))
+                } else {
+                    handleServerAppError(res, dispatch)
+                }
+
+            })
+            .catch(err => {
+                handleNetworkAppError(err, dispatch)
             })
     }
 }
+
 // type
-type ThunkDispatchType = Dispatch<taskReducerAT | changeStatusType | changeLoadingType>
+export type ThunkDispatchType = Dispatch<taskReducerAT | changeStatusType | changeLoadingType>
 export type TaskDomainType = {
     description?: string,
     title?: string,

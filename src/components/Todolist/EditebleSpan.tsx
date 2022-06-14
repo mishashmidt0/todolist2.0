@@ -14,6 +14,7 @@ export const EditebleSpan = React.memo(({todolistId, taskId, title, dispatch, di
 
         let [editMode, setEditMode] = useState<boolean>(false);
         let [newTitle, setTitle] = useState(title);
+        let [error, setError] = useState<string>("");
 
         const activateEditMode = () => {
             if (disable) {
@@ -21,9 +22,20 @@ export const EditebleSpan = React.memo(({todolistId, taskId, title, dispatch, di
             }
             setEditMode(true)
         }
+
+        const handleModeError = () => {
+            if (newTitle.length > 100) {
+                setError("Error, title is too long")
+            } else if (newTitle.length === 0) {
+                setError("Error, title empty")
+            } else {
+                setError("")
+                setEditMode(false)
+            }
+        }
         const activateViewMode = () => {
             dispatch(todolistId, taskId, {title: newTitle})
-            setEditMode(false)
+            handleModeError()
         }
         const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
             setTitle(e.currentTarget.value);
@@ -31,7 +43,7 @@ export const EditebleSpan = React.memo(({todolistId, taskId, title, dispatch, di
         const onkeypress = (e: KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter') {
                 dispatch(todolistId, taskId, {title: newTitle})
-                setEditMode(false)
+                handleModeError()
             }
         }
 
@@ -42,6 +54,8 @@ export const EditebleSpan = React.memo(({todolistId, taskId, title, dispatch, di
                     autoFocus
                     onChange={onChangeTitleHandler}
                     onKeyPress={onkeypress}
+                    label={error}
+                    error={!!error}
                 />
 
                 : <span onDoubleClick={activateEditMode}>{newTitle}</span>
