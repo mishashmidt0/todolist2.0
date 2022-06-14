@@ -1,5 +1,5 @@
-import axios from "axios";
 import {TaskDomainType} from "../store/tasks-reducer";
+import {myApi} from "./auth-api";
 
 
 export type TaskDBType = {
@@ -15,20 +15,8 @@ export type TaskDBType = {
     order: number,
     addedDate: string,
 }
-export type GetTaskResponse = {
-    error: string | null,
-    totalCount: number,
-    items: TaskDBType[]
-}
 
-class TaskAPI {
-    instance = axios.create({
-        baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-        withCredentials: true,
-        headers: {
-            "API-KEY": "918ec3c9-ea92-470f-ae86-9d6bbf63b653"
-        }
-    })
+class TaskAPI extends myApi {
 
     getTasks(todolistId: string) {
         return this.instance.get<any>(`todo-lists/${todolistId}/tasks`)

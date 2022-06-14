@@ -1,14 +1,7 @@
-import axios from "axios";
+import {myApi} from "./auth-api";
 
 
-class TodoAPI {
-    instance = axios.create({
-        baseURL: 'https://social-network.samuraijs.com/api/1.1/',
-        withCredentials: true,
-        headers: {
-            "API-KEY": "918ec3c9-ea92-470f-ae86-9d6bbf63b653"
-        }
-    })
+class TodoAPI extends myApi {
 
     getTodo() {
         return this.instance.get("todo-lists")
@@ -36,8 +29,10 @@ class TodoAPI {
     }
 
     updateTodo(id: string, title: string) {
-       return this.instance.put(`todo-lists/${id}`, {title: title})
+        return this.instance.put(`todo-lists/${id}`, {title: title})
     }
+
+
 
 }
 
