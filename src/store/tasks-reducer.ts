@@ -91,8 +91,12 @@ export const setTaskTC = (todolistId: string) => {
         dispatch(changeLoading("loading"))
         taskAPI.getTasks(todolistId)
             .then(res => {
-                dispatch(setTasks(todolistId, res.data.items))
-                dispatch(changeLoading("ready"))
+                if (res.data.totalCount === 0) {
+                    dispatch(setTasks(todolistId, res.data.items))
+                    dispatch(changeLoading("ready"))
+                } else {
+                    handleServerAppError(res, dispatch)
+                }
             })
             .catch(err => {
                 handleNetworkAppError(err, dispatch)
@@ -126,9 +130,14 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => {
         dispatch(changeLoading("loading"))
         taskAPI.deleteTask(todolistId, taskId)
             .then(res => {
-                dispatch(removeTaskAC(todolistId, taskId))
-                dispatch(changeStatus({status: "ready", message: "Task deleted", cover: "info"}))
-                dispatch(changeLoading("ready"))
+                if (res.data.resultCode === 0) {
+                    dispatch(removeTaskAC(todolistId, taskId))
+                    dispatch(changeStatus({status: "ready", message: "Task deleted", cover: "info"}))
+                    dispatch(changeLoading("ready"))
+                } else {
+                    handleServerAppError(res, dispatch)
+                }
+
             })
             .catch(err => {
                 handleNetworkAppError(err, dispatch)
