@@ -49,8 +49,13 @@ export const setTodo = () => {
         dispatch(changeLoading("loading"))
         todoAPI.getTodo()
             .then(res => {
-                dispatch(setAllTodo(res.data))
-                dispatch(changeLoading("ready"))
+                if (!!res.data) {
+                    dispatch(setAllTodo(res.data))
+                    dispatch(changeLoading("ready"))
+                } else {
+                    handleServerAppError(res, dispatch)
+                }
+
             })
             .catch(err => {
                 handleNetworkAppError(err, dispatch)
@@ -64,9 +69,14 @@ export const removeTodolistTC = (todolistId: string) => {
         dispatch(changeTodolistStatus(todolistId, "loading"))
         todoAPI.deleteTodolistById(todolistId)
             .then(res => {
-                dispatch(removeTodolist(todolistId))
-                dispatch(changeLoading("ready"))
-                dispatch(changeStatus({status: "ready", message: "Todolist deleted", cover: "info"}))
+                if (res.data.resultCode === 0) {
+                    dispatch(removeTodolist(todolistId))
+                    dispatch(changeLoading("ready"))
+                    dispatch(changeStatus({status: "ready", message: "Todolist deleted", cover: "info"}))
+                } else {
+                    handleServerAppError(res, dispatch)
+                }
+
             })
             .catch(err => {
                 handleNetworkAppError(err, dispatch)
