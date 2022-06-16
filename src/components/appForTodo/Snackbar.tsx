@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, {AlertProps} from '@mui/material/Alert';
+import MuiAlert from '@mui/material/Alert';
 import {changeStatus, coverType, statusType} from "../../store/app-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {storeType} from "../../store/redux";
+import {AlertProps, Snackbar} from "@mui/material";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -31,7 +31,7 @@ export function Snackbars() {
 
 
     return (
-        <Snackbar open={app.status == "ready"} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{vertical: "bottom", horizontal: "center"}}>
+        <Snackbar open={app.status === "ready"} autoHideDuration={3000} onClose={handleClose} anchorOrigin={{vertical: "bottom", horizontal: "center"}}>
             <Alert onClose={handleClose} severity={app.cover} sx={{width: '100%'}}>
                 {app.message}
             </Alert>

@@ -91,12 +91,8 @@ export const setTaskTC = (todolistId: string) => {
         dispatch(changeLoading("loading"))
         taskAPI.getTasks(todolistId)
             .then(res => {
-                if (res.data.totalCount === 0) {
-                    dispatch(setTasks(todolistId, res.data.items))
-                    dispatch(changeLoading("ready"))
-                } else {
-                    handleServerAppError(res, dispatch)
-                }
+                dispatch(setTasks(todolistId, res.data.items))
+                dispatch(changeLoading("ready"))
             })
             .catch(err => {
                 handleNetworkAppError(err, dispatch)
@@ -161,6 +157,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, model: TaskDoma
             .then(res => {
                 if (res.data.resultCode === 0) {
                     dispatch(updateTask(todolistId, taskId, res.data.data.item))
+                    dispatch(changeStatus({status: "ready", message: "Change Task", cover: "info"}))
                 } else {
                     handleServerAppError(res, dispatch)
                 }
