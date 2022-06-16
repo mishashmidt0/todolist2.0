@@ -1,11 +1,11 @@
- # App Todolist
+# App Todolist
 
 [Demo]()
 
 ![Todolist](assetsForReadme/todo.gif)
- 
- >Login 
-> ![img.png](assetsForReadme/img.png)
+
+Login
+![img.png](assetsForReadme/img.png)
 
 ## Install
 
