@@ -16,7 +16,7 @@ export const Login = () => {
             if (!values.password) return ({password: "password is required"})
         },
         initialValues: {
-            email: "free0@gmail.com",
+            email: "free@samuraijs.com",
             password: "free",
             rememberMe: false,
         },
@@ -36,7 +36,7 @@ export const Login = () => {
                         <FormLabel>
                             <Typography variant={"subtitle2"} gutterBottom component="div"> To log on get registered here <br/>or use common test account
                                 credentials:</Typography>
-                            <Typography variant={"subtitle2"} gutterBottom component="div"> Email: free@gmail.com</Typography>
+                            <Typography variant={"subtitle2"} gutterBottom component="div"> Email: free@samuraijs.com</Typography>
                             <Typography variant={"subtitle2"} gutterBottom component="div">Password: free</Typography>
                         </FormLabel>
                         <FormGroup>
