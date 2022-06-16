@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField} from "@mui/material";
+import {Button, Checkbox, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, TextField, Typography} from "@mui/material";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "./auth-reducer";
@@ -16,8 +16,8 @@ export const Login = () => {
             if (!values.password) return ({password: "password is required"})
         },
         initialValues: {
-            email: "mishashmidt0@gmail.com",
-            password: "03091997v",
+            email: "free0@gmail.com",
+            password: "free",
             rememberMe: false,
         },
         onSubmit: values => {
@@ -29,21 +29,15 @@ export const Login = () => {
         return <Navigate to={'/'}/>
     }
     return (
-
         <Grid container justifyContent={"center"}>
             <Grid item xs={4}>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl>
                         <FormLabel>
-                            <p>
-                                To log on get registered here
-                                <br/>
-                                or use common test account credentials:
-                                <br/>
-                                Email: free@gmail.com
-                                <br/>
-                                Password: free
-                            </p>
+                            <Typography variant={"subtitle2"} gutterBottom component="div"> To log on get registered here <br/>or use common test account
+                                credentials:</Typography>
+                            <Typography variant={"subtitle2"} gutterBottom component="div"> Email: free@gmail.com</Typography>
+                            <Typography variant={"subtitle2"} gutterBottom component="div">Password: free</Typography>
                         </FormLabel>
                         <FormGroup>
                             <TextField label="Email" variant="standard" {...formik.getFieldProps("email")} />

@@ -6,12 +6,12 @@ import {handleNetworkAppError, handleServerAppError} from "../util/handle-app-ut
 const initialState: appStateType = {
     status: "inq",
     message: "",
-    cover: "success",
+    cover: "info",
     loading: "ready",
     initialized: false
 }
 
-export const appReducer = (app: appStateType = initialState, action: appReducer): appStateType => {
+export const appReducer = (app: appStateType = initialState, action: appReducerType): appStateType => {
 
     switch (action.type) {
         case "STATUS-CHANGE":
@@ -63,7 +63,7 @@ export type appStateModelType = {
 export type changeStatusType = ReturnType<typeof changeStatus>
 export type changeLoadingType = ReturnType<typeof changeLoading>
 export type setAppInitializedType = ReturnType<typeof setAppInitialized>
-export type appReducer =
+export type appReducerType =
     | changeStatusType
     | changeLoadingType
     | setAppInitializedType
